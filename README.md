@@ -1,78 +1,84 @@
-# DebugBro AI
+# 🤖 DebugBro AI
 
-> Your friendly AI buddy for helping engineers debug software, stay motivated, and improve their performance — for free and offline!
-
----
-
-## 🚀 What is DebugBro?
-**DebugBro** is a lightweight AI assistant built for engineers. It provides:
-- 💬 AI-powered answers to software/hardware questions
-- 💡 Motivational messages to keep you inspired
-- 🌍 Translation placeholder for technical terms (no external API required)
-- 📈 Performance comparison tool
-- 👤 Personalized interaction via user input
-
-Built using `distilGPT2`, it's completely **open-source** and runs with no paid APIs!
+**DebugBro AI** is your personal assistant designed to help with engineering-related problems — both software and hardware! It can answer questions, offer motivational support, translate simple phrases, and help you track your progress.
 
 ---
 
-## 🧠 Example Commands
-```bash
-# Ask a technical question:
-What is a segmentation fault?
+## 🧠 Features
 
-# Get a motivational message:
-Motivate me!
-
-# Translate text (offline placeholder):
-Translate "debugging" to Spanish
-
-# Compare results:
-Compare 85% and 90%
-```
+- 🔧 Software & Hardware problem solving
+- 💬 Motivational messages
+- 🌐 Basic translation (placeholder)
+- 📈 Compare previous and new results
+- 👤 Personalized interaction
 
 ---
 
-## ❌ Exiting the Program
-```bash
-Type 'exit' to close DebugBro.
-```
+## 🚀 Getting Started
 
----
+### 1. Clone the Repository
 
-## 🛠️ Installation
-1. **Clone the repository**
 ```bash
 git clone https://github.com/your-username/debugbro-ai.git
 cd debugbro-ai
 ```
 
-2. **Install dependencies**
+### 2. Install Dependencies
+
 ```bash
-pip install transformers torch
+pip install -r requirements.txt
 ```
 
-3. **Run the assistant**
+### 3. Set Your OpenAI API Key
+
+- Create a `.env` file and add your API key:
+
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
+Or edit the script directly to include your API key in the variable.
+
+---
+
+## 💻 Running the Assistant
+
 ```bash
-python debugbro.py
+python main.py
+```
+
+You'll be welcomed by DebugBro and prompted for your name and whether your issue is software or hardware related.
+
+---
+
+## 🗂️ Example Commands
+
+```text
+How to fix a short circuit?
+Motivate me!
+Translate "Hola" to English
+Compare 80% and 90%
+```
+
+---
+
+## 🔚 Exiting the Program
+
+To exit the program, simply type:
+
+```text
+exit
 ```
 
 ---
 
 ## 🤝 Contributing
-Feel free to fork this repo, suggest features, or submit pull requests. Ideas to improve DebugBro are always welcome!
+
+Feel free to fork this repository, submit issues, or create pull requests. If you have suggestions for improving or adding features, I’d love to hear from you!
 
 ---
 
+## 🧠 Why I Built This
 
-## ✨ Why I Built It
-I created DebugBro as part of my passion for AI and engineering. This project reflects my interest in helping others solve problems and improve — with the help of an accessible, helpful AI assistant.
+This project was made to demonstrate my passion for AI and problem-solving. I wanted to create an assistant that could help engineers just like me tackle everyday issues — and encourage them while doing so!
 
-It’s part of a larger portfolio demonstrating my skills for university applications and personal growth.
-
----
-
-## 👨‍💻 Author
-**Konstantinos Farris** – Greek high school student with a love for coding, engineering, and AI!
-
-> For more AI tools, check out my [GitHub](https://github.com/splasyyy)!
