@@ -1,5 +1,7 @@
+import os
 from transformers import pipeline
 import random
+import time
 
 # Load the model
 assistant = pipeline("text-generation", model="distilgpt2")
@@ -13,13 +15,16 @@ motivational_messages = [
     "Stay curious, stay building."
 ]
 
+# Function to generate responses using the AI model
 def generate_response(prompt):
     response = assistant(prompt, max_length=100, num_return_sequences=1)[0]['generated_text']
     return response.strip()
 
+# Translation placeholder (currently not implemented)
 def translate(text, to_language):
     return f"(Translation to {to_language} not available offline – feature placeholder)"
 
+# Function to compare results (e.g., performance, grades)
 def compare_results(old, new):
     try:
         old_val = float(old.strip('%'))
@@ -30,13 +35,23 @@ def compare_results(old, new):
     except:
         return "Invalid input. Please use percentage format (e.g., 85%, 90%)."
 
+# Function to gather user information for personalization
 def get_user_info():
     name = input("What's your name? ")
     focus = input("What engineering field are you in? (e.g., software, electrical) ")
     return name, focus
 
+# Function to clear the screen and set the command prompt color to green
+def clear_screen_and_set_color():
+    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the screen for Windows or Unix-based systems
+    # ANSI escape code to set text color to green
+    print("\033[32m")  # Set text color to green
+
+# Main function to interact with the assistant
 def main():
+    clear_screen_and_set_color()  # Clear the screen and set color to green
     print("👋 Welcome to DebugBro – your friendly AI Engineering Assistant!")
+    time.sleep(1)  # Pause for a second before getting user info
     name, field = get_user_info()
 
     while True:
