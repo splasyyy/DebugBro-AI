@@ -1,10 +1,9 @@
-import os
-from transformers import pipeline
+import openai
 import random
-import time
+import os
 
-# Load the model
-assistant = pipeline("text-generation", model="distilgpt2")
+# Set your OpenAI API key here
+openai.api_key = "your_openai_api_key"
 
 # Predefined motivational messages
 motivational_messages = [
@@ -15,16 +14,22 @@ motivational_messages = [
     "Stay curious, stay building."
 ]
 
-# Function to generate responses using the AI model
 def generate_response(prompt):
-    response = assistant(prompt, max_length=100, num_return_sequences=1)[0]['generated_text']
-    return response.strip()
+    try:
+        # Make a request to OpenAI API for text generation using the new ChatCompletion API
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # You can use gpt-4 as well if you have access
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=150,
+            temperature=0.7
+        )
+        return response['choices'][0]['message']['content'].strip()
+    except Exception as e:
+        return f"Error: {str(e)}"
 
-# Translation placeholder (currently not implemented)
 def translate(text, to_language):
     return f"(Translation to {to_language} not available offline – feature placeholder)"
 
-# Function to compare results (e.g., performance, grades)
 def compare_results(old, new):
     try:
         old_val = float(old.strip('%'))
@@ -35,30 +40,38 @@ def compare_results(old, new):
     except:
         return "Invalid input. Please use percentage format (e.g., 85%, 90%)."
 
-# Function to gather user information for personalization
 def get_user_info():
     name = input("What's your name? ")
-    focus = input("What engineering field are you in? (e.g., software, electrical) ")
-    return name, focus
+    return name
 
-# Function to clear the screen and set the command prompt color to green
-def clear_screen_and_set_color():
-    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the screen for Windows or Unix-based systems
-    # ANSI escape code to set text color to green
-    print("\033[32m")  # Set text color to green
+def show_commands():
+    print("\nHere are the things I can help you with:")
+    print("1. Ask for a motivational message: Type 'motivate'")
+    print("2. Translate text: Type 'translate'")
+    print("3. Compare results: Type 'compare'")
+    print("4. Ask about a hardware or software problem: Type 'hardware' or 'software'")
+    print("5. Get help with a specific engineering query: Type any other command")
+    print("Type 'exit' to quit the program.")
 
-# Main function to interact with the assistant
 def main():
-    clear_screen_and_set_color()  # Clear the screen and set color to green
+    # Clear the terminal screen
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    # Change terminal color to green (Windows command prompt specific)
+    if os.name == 'nt':
+        os.system('color 0a')
+
     print("👋 Welcome to DebugBro – your friendly AI Engineering Assistant!")
-    time.sleep(1)  # Pause for a second before getting user info
-    name, field = get_user_info()
+    name = get_user_info()
+
+    # Show the available commands
+    show_commands()
 
     while True:
-        command = input("\nType a command (or type 'exit' to quit): ").lower()
+        command = input("\nType a command (or type 'exit' to quit): ").lower().strip()
 
         if command == "exit":
-            print("Goodbye!")
+            print("Goodbye! Come back anytime if you need assistance!")
             break
 
         elif "motivate" in command:
@@ -74,9 +87,17 @@ def main():
             new = input("New result (e.g., 90%): ")
             print(compare_results(old, new))
 
+        elif "hardware" in command or "software" in command:
+            issue_type = input(f"Is the problem hardware-related or software-related? ").lower()
+            print(f"Understood, {name}. Let's address your {issue_type}-related problem.")
+            print(generate_response(f"Please help with a {issue_type}-related problem"))
+
         else:
             print(f"{name}, here's what I found:")
             print(generate_response(command))
+
+        # Show commands again after each interaction
+        show_commands()
 
 if __name__ == "__main__":
     main()
